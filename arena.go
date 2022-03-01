@@ -94,4 +94,5 @@ func main() {
 	fmt.Printf("---- Initiative Phase ----\n")
 	doInitiative(monsterPick1, monsterPick2)
 
+	//TODO finish round 1
 }
