@@ -8,7 +8,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/linkovich2/dice"
 )
@@ -80,7 +79,6 @@ func main() {
 		}
 	*/
 
-	rand.Seed(time.Now().UnixNano()) //used to pick a different seed
 	fmt.Printf("The  wizard summons 2 monsters out of %v: \n\n", len(monsters))
 	randomMonster1 := rand.Intn(len(monsters))
 	monsterPick1 := monsters[randomMonster1]
