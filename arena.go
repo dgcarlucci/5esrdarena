@@ -8,6 +8,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/linkovich2/dice"
 )
@@ -43,10 +44,15 @@ func rollSimpleInitiative(monster Monster) int {
 	var initiativeMod = (monster.Dexterity / 2) - 5
 	var sbMonster1InitRoll strings.Builder
 	var d1 dice.Dice = "1d20"
-
-	sbMonster1InitRoll.WriteString("+")
+	//check for + or -
+	if initiativeMod >= 0 {
+		sbMonster1InitRoll.WriteString("+")
+	}
 	sbMonster1InitRoll.WriteString(strconv.Itoa(initiativeMod))
 	initiative := d1.RollWithModifier(sbMonster1InitRoll.String())
+	if initiative < 0 { //check for negative initiative
+		initiative = 0
+	}
 	fmt.Printf(monster.Name + " rolled " + "(1d20" + sbMonster1InitRoll.String() + "): " + strconv.Itoa(initiative) + "\n")
 	return initiative
 }
@@ -78,7 +84,7 @@ func main() {
 			fmt.Printf("The monster '%s' has a CR of '%s' has an Initiative of '%d'\n", monsters[k].Name, monsters[k].Challenge_Rating, calcInitiative(monsters[k].Dexterity))
 		}
 	*/
-
+	rand.Seed(time.Now().UnixNano()) //used to pick a different seed for each monster pick
 	fmt.Printf("The  wizard summons 2 monsters out of %v: \n\n", len(monsters))
 	randomMonster1 := rand.Intn(len(monsters))
 	monsterPick1 := monsters[randomMonster1]
